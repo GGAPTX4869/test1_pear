@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>树形表格</title>
+    <link rel="stylesheet" href="../../component/pear/css/pear.css" />
+    <link rel="stylesheet" href="../../component/layui/css/layui.css" />
+</head>
+<style>
+    .layui-card-body .layui-table-tool {
+        padding: 0 !important;
+        min-height: 0;
+    }
+</style>
+
+<body class="pear-container">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键字</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" placeholder="" class="layui-input">
+                    </div>
+                    <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="stu-query">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="pear-btn pear-btn-md">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                    <button class="pear-btn pear-btn-primary pear-btn-md addBtn" lay-filter="stu-add">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                        新增
+                    </button>
+                </div>
+            </form>
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <table id="stu-table-all" lay-filter="stu-table-all"></table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="../../component/layui/layui.js"></script>
+    <script src="../../component/pear/pear.js"></script>
+    <script>
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+
+        layui.use(['table', 'form', 'jquery', 'layer'], function () {
+            let table = layui.table;
+            let $ = layui.jquery;
+            let layer = layui.layer;
+
+            //获取全部学生列表
+            $.ajax({
+                url: 'http://localhost:8081/all-student'
+                , type: "GET"
+                , dataType: "JSON"
+                , success: function (res) {
+                    table.render({
+                        elem: '#stu-table-all',
+                        toolbar: '#stu-toolbar',
+                        defaultToolbar: [],
+                        skin: 'line',
+                        page: true,
+                        cols: [
+                            [
+                                { type: 'checkbox' },
+                                { field: 'sno', title: '学号', width: '20%', align: 'center' },
+                                { field: 'name', title: '学生姓名', width: '20%', align: 'center' },
+                                { field: 'collegeName', title: '所属院系', width: '20%', align: 'center' },
+                                { field: 'classNumber', title: '所属班级', width: '20%', align: 'center' },
+                            ]
+                        ],
+                        data: res.data
+                    });
+
+                }
+            });
+
+            window.onload = () => {
+                var idx = getUrlParam('course-id');
+                var startTime = decodeURI(decodeURI(getUrlParam('start-time')));
+                var endTime = decodeURI(decodeURI(getUrlParam('end-time')));
+                $(".addBtn").on("click", function () {
+                    var oldData = parent.layui.table.cache["stu-table-choose"];
+                    var checkStatus = table.checkStatus('stu-table-all');
+                    var newData = checkStatus.data;
+                    for (let i = 0; i < newData.length; i++) {
+                        console.log(newData[i]);
+                        let dataPost = {
+                            sno: newData[i].sno,
+                            classNumber:newData[i].classNumber,
+                            tno: "123456789012",
+                            courseId: idx,
+                            startTime,
+                            endTime
+                        };
+                        console.log(dataPost);
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:8081/student-course',
+                            data: JSON.stringify(dataPost),
+                            contentType: 'application/json',
+                            success: function (res) {
+                                console.log(res);
+                            }
+                        });
+                        $.ajax({
+                            type: 'POST',
+                            url: 'http://localhost:8081/teacher-student-course',
+                            data: JSON.stringify(dataPost),
+                            contentType: 'application/json',
+                            success: function (res) {
+                                console.log(res);
+                            }
+                        });
+                        oldData.push(newData[i]);
+                    }
+                    //打印重组的table信息
+                    parent.layui.table.reload('stu-table-choose',
+                        {
+                            data: oldData
+                        })
+                })
+            }
+        })
+
+        window.batchRemove = function (obj) {
+            let data = table.checkStatus(obj.config.id).data;
+            if (data.length === 0) {
+                layer.msg("未选中数据", {
+                    icon: 3,
+                    time: 1000
+                });
+                return false;
+            }
+            let ids = "";
+            for (let i = 0; i < data.length; i++) {
+                ids += data[i].powerId + ",";
+            }
+            ids = ids.substr(0, ids.length - 1);
+            layer.confirm('确定要删除这些数据', {
+                icon: 3,
+                title: '提示'
+            }, function (index) {
+                layer.close(index);
+                let loading = layer.load();
+                $.ajax({
+                    url: "batchRemove/" + ids,
+                    dataType: 'json',
+                    type: 'delete',
+                    success: function (result) {
+                        layer.close(loading);
+                        if (result.success) {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            }, function () {
+                                table.reload('user-table');
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            });
+        }
+    </script>
+</body>
+
+</html>

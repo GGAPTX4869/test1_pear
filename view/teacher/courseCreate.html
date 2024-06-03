@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>课程创建</title>
+    <link rel="stylesheet" href="../../component/pear/css/pear.css" />
+</head>
+<style>
+    .content-box {
+        width: 80% !important;
+        height: 100%;
+        margin: 35px auto;
+    }
+
+    .course-content {
+        display: flex;
+        margin-top: 15px;
+        height: calc(100% - 500px);
+        /* min-height: 527px; */
+    }
+
+    .course-content button {
+        margin: 0 auto;
+    }
+
+    #stepForm {
+        min-height: 800px !important;
+        overflow: auto;
+    }
+
+    .layui-form-item:last-child .layui-input-block {
+        text-align: center;
+    }
+
+    /* 左侧选项盒 */
+    .left-list {
+        border: 1px solid rgba(231, 231, 231, 1);
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        outline: none;
+    }
+
+    .left-list .layui-nav {
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        /* background-color: #fff; */
+    }
+
+    .layui-nav-tree .layui-nav-child dd.layui-this,
+    .layui-nav-tree .layui-nav-child dd.layui-this a,
+    .layui-nav-tree .layui-this,
+    .layui-nav-tree .layui-this>a,
+    .layui-nav-tree .layui-this>a:hover {
+        background-color: #1e9fff;
+        color: #fff;
+    }
+
+
+    /* 右侧盒子--关于每条课程信息的内容 */
+    .right-content {
+        flex: 1;
+        margin-left: 20px;
+        /* min-height: 500px; */
+        background-color: #fff;
+        overflow: auto;
+        box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    .right-content .layui-tab-card {
+        height: 100%;
+    }
+
+    .layui-tab-card>.layui-tab-title .layui-this {
+        background-color: #1e9fff;
+        color: #fff;
+    }
+
+    .right-content .tab-content {
+        overflow: auto;
+        padding: 10px 20px;
+    }
+
+    .base-cont .row {
+        line-height: 36px;
+        margin: 5px 0 0;
+    }
+
+    .base-cont .row label {
+        width: 108px;
+    }
+
+    /* .layui-table-body table {
+        width: 100% !important;
+    } */
+
+    .table-form {
+        margin-top: 15px;
+    }
+
+    .tableType {
+        margin-bottom: 0;
+    }
+
+    .tableType>.layui-input-block>.layui-form-radio {
+        float: right;
+    }
+
+    .table-info {
+        margin: 50px auto;
+    }
+
+    .table-info .layui-form-item:last-child,
+    .content-box .layui-form-item:last-child {
+        margin-top: 50px;
+    }
+
+    .layui-table {
+        width: 100% !important;
+    }
+
+    /* .layui-table .layui-table-cell {
+        width: 100% !important;
+    } */
+</style>
+
+<body class="pear-container">
+    <div class="layui-row layui-col-space10">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card">
+                    <div class="layui-card-body" style="padding-top: 40px;">
+                        <div class="layui-carousel" id="stepForm" lay-filter="stepForm" style="margin: 0 auto;">
+                            <div carousel-item>
+                                <!-- 课程选择信息 -->
+                                <div>
+                                    <form class="layui-form" action="javascript:void(0);"
+                                        style="margin: 0 auto;max-width: 460px;padding-top: 40px;">
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">技术方向:</label>
+                                            <div class="layui-input-block">
+                                                <select lay-verify="required" name="direction" lay-filter="direction"
+                                                    id="direction">
+                                                    <option value="1">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">课程选择:</label>
+                                            <div class="layui-input-block">
+                                                <select lay-verify="required" name="courseName" lay-filter="courseName"
+                                                    id="courses">
+                                                    <option value="1">请选择</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">开始时间:</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input" id="ID-laydate-format-1"
+                                                    placeholder="年/月/日" lay-submit name="startdate">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">结束时间:</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input" id="ID-laydate-format-1"
+                                                    placeholder="年/月/日" lay-submit name="enddate">
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <label class="layui-form-label">课程简介:</label>
+                                            <div class="layui-input-block">
+                                                <textarea placeholder="" value="" class="layui-textarea"
+                                                    name="introduction"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button class="pear-btn pear-btn-primary" lay-submit
+                                                    lay-filter="formStep1">
+                                                    &emsp;下一步&emsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- 排课设置 -->
+                                <div>
+                                    <div class="table-info" style="width:70%">
+                                        <form class="layui-form table-form">
+                                            <div class="layui-form-item tableType">
+                                                <div class="layui-input-block">
+                                                    <input type="radio" name="sex" value="学生信息" title="学生信息"
+                                                        lay-filter="radiobox" checked>
+                                                    <input type="radio" name="sex" value="班级信息" title="班级信息"
+                                                        lay-filter="radiobox">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <div class="layui-form-item stu-form">
+                                            <table lay-filter="stu-table-choose" id="stu-table-choose"></table>
+                                        </div>
+                                        <div class="layui-form-item class-form" style="display: none">
+                                            <table lay-filter="class-table-choose" id="class-table-choose"></table>
+                                        </div>
+                                        <div class="layui-form-item">
+                                            <div class="layui-input-block">
+                                                <button type="button"
+                                                    class="pear-btn pear-btn-success pre">&emsp;上一步&emsp;</button>
+                                                <button class="pear-btn pear-btn-primary" lay-submit
+                                                    lay-filter="formStep2">
+                                                    &emsp;下一步&emsp;
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 完成 -->
+                                <div>
+                                    <div style="text-align: center;margin-top: 90px;">
+                                        <i class="layui-icon layui-circle"
+                                            style="color: white;font-size:30px;font-weight:bold;background: #52C41A;padding: 20px;line-height: 80px;">&#xe605;</i>
+                                        <div style="font-size: 24px;color: #333;font-weight: 500;margin-top: 30px;">
+                                            添加成功！
+                                        </div>
+                                    </div>
+                                    <div style="text-align: center;margin-top: 50px;">
+                                        <button class="pear-btn pear-btn-success jump loading-1"
+                                            lay-on="tabChange">查看课程</button>
+                                        <button class="pear-btn pear-btn-success next">继续添加</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script type="text/html" id="user-toolbar">
+                                    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="choose">
+                                        <i class="layui-icon layui-icon-add-1"></i>
+                                        选择
+                                    </button>
+                                    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+                                        <i class="layui-icon layui-icon-delete"></i>
+                                        删除
+                                    </button>
+                                </script>
+                            <script type="text/html" id="stu-bar">
+                                    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove">移除</button>
+                                </script>
+
+                            <script type="text/html" id="class-bar">
+                            <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove">移除</button>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src="../../component/layui/layui.js"></script>
+    <script src="../../component/pear/pear.js"></script>
+
+    <script>
+        // 流程跟进
+        layui.use(['form', 'step', 'element','table'], function () {
+            var $ = layui.$,
+                form = layui.form,
+                step = layui.step,
+                table=layui.table;
+            step.render({
+                elem: '#stepForm',
+                filter: 'stepForm',
+                width: '100%',
+                stepWidth: '600px',
+                height: '600px',
+                stepItems: [{
+                    title: '课程选择'
+                }, {
+                    title: '设置排课信息'
+                }, {
+                    title: '完成'
+                }]
+            });
+
+            let courseArrange = {};
+
+            form.on('submit(formStep1)', function (data) {
+                var field = data.field; // 获取表单全部字段值
+                var elem = data.elem; // 获取当前触发事件的元素 DOM 对象，一般为 button 标签
+                var elemForm = data.form; // 获取当前表单域的 form 元素对象，若容器为 form 标签才会返回。
+                if (field.courseName == "") {
+                    layer.msg("课程名不能为空")
+                } else if (field.startdate == "") {
+                    layer.msg("起始时间不能为空")
+                } else if (field.enddate == "") {
+                    layer.msg("结束时间不能为空")
+                } else {
+                    courseArrange.courseName = field.courseName;
+                    courseArrange.direction = field.direction;
+                    courseArrange.startTime = field.startdate;
+                    courseArrange.endTime = field.enddate;
+                    sessionStorage.setItem('tno', '123');
+                    sessionStorage.setItem('courseId', courseArrange.courseName);
+                    sessionStorage.setItem('startTime', courseArrange.startTime);
+                    sessionStorage.setItem('endTime', courseArrange.endTime);
+
+                    step.next('#stepForm');
+
+
+                    // 表student-table-choose
+                    $.get(`http://127.0.0.1:8081/student-list?courseId=${sessionStorage.getItem('courseId')}&tno=${sessionStorage.getItem('tno')}`, function (res) {
+                        let data=[];
+                        if(res!=null) data=res.data;
+                        table.render({
+                            elem: '#stu-table-choose',
+                            toolbar: '#user-toolbar',
+                            page: true,
+                            cols: [[
+                                { type: 'checkbox' },
+                                { field: 'sno', title: '学号', width: '20%', align: 'center' },
+                                { field: 'name', title: '学生姓名', width: '20%', align: 'center' },
+                                { field: 'collegeName', title: '所属院系', width: '20%', align: 'center' },
+                                { field: 'classNumber', title: '所属班级', width: '20%', align: 'center' },
+                                , { field: 'operate', title: '操作', width: '20%', align: 'center', toolbar: "#stu-bar" }
+                            ]],
+                            data: data
+                        });
+                    })
+
+                    // 表class-table-choose
+                    $.get(`http://127.0.0.1:8081/class-list?courseId=${sessionStorage.getItem('courseId')}&tno=${sessionStorage.getItem('tno')}`, function (res) {
+                        let data=[];
+                        if(res!=null) data=res.data;
+                        table.render({
+                            elem: '#class-table-choose',
+                            toolbar: '#user-toolbar',
+                            page: true,
+                            cols: [[
+                                { type: 'checkbox', width: '20%' },
+                                { field: 'classNumber', title: '班级号', width: '20%', align: 'center' },
+                                { field: 'className', title: '班级名称', width: '20%', align: 'center' },
+                                { field: 'totalStudentNumber', title: '人数', width: '20%', align: 'center' },
+                                { field: 'operate', title: '操作', width: '20%', align: 'center', toolbar: "#class-bar" }
+                            ]],
+                            data:data
+                        });
+                    })
+
+
+                }
+                return false;
+            });
+
+            form.on('submit(formStep2)', function (data) {
+                console.log(data);
+                step.next('#stepForm');
+                return false;
+            });
+
+            $('.pre').click(function () {
+                step.pre('#stepForm');
+                return false;
+            });
+
+            $('.next').click(function () {
+                step.next('#stepForm');
+                return false;
+            });
+
+
+            //课程选择部分
+            $.get('http://127.0.0.1:8081/direction', function (res) {
+                let directions = res.data;
+                var str = `<option value="">请选择</option>`;
+                for (let i = 0; i < directions.length; i++) {
+                    str += `<option value='${directions[i]}'>${directions[i]}</option>`;
+                }
+                $('#direction').html(str);
+                form.render('select');
+            })
+
+            form.on('select(direction)', function (data) {
+                let selectDirection = data.value;
+                // 获取方向对应的课程
+                $.ajax({
+                    type: 'GET',
+                    url: `http://127.0.0.1:8081/all-course/` + encodeURI(selectDirection),
+                    dataType: 'JSON',
+                    success: function (res) {
+                        var courseList = res.data;
+                        console.log(courseList);
+                        var str = `<option value="">请选择</option>`;
+                        for (let i = 0; i < courseList.length; i++) {
+                            str += `<option value='${courseList[i].courseId}'>${courseList[i].courseName}</option>`;
+                        }
+                        $('#courses').html(str);
+                        form.render('select');
+
+                    }
+                });
+            });
+
+
+        })
+    </script>
+
+    <script>
+        // table表渲染
+        layui.use(['table', 'form', 'jquery'], function () {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+
+            table.on('toolbar(stu-table-choose)', function (obj) {
+                if (obj.event === 'choose') {
+                    window.stuChoose();
+                } else if (obj.event === 'batchRemove') {
+                    window.stuBatchRemove(obj);
+                }
+            });
+            table.on('tool(stu-table-choose)', function (obj) {
+                if (obj.event === 'remove') {
+                    window.stuRemove(obj);
+                }
+            });
+
+            table.on('toolbar(class-table-choose)', function (obj) {
+                if (obj.event === 'choose') {
+                    console.log(obj);
+                    window.classChoose();
+                } else if (obj.event === 'batchRemove') {
+                    window.classBatchRemove(obj);
+                }
+            });
+            table.on('tool(class-table-choose)', function (obj) {
+                if (obj.event === 'remove') {
+                    window.classRemove(obj);
+                }
+            });
+
+
+            window.stuChoose = function () {
+                layer.open({
+                    type: 2,
+                    title: '学生选择',
+                    shade: 0.1,
+                    area: ['80%', '550px'],
+                    content: './stuInfo.html'
+                });
+            }
+            window.classChoose = function () {
+                layer.open({
+                    type: 2,
+                    title: '班级选择',
+                    shade: 0.1,
+                    area: ['80%', '550px'],
+                    content: './classInfo.html'
+                });
+            }
+            window.batchRemove = function (obj) {
+                let data = table.checkStatus(obj.config.id).data;
+                if (data.length === 0) {
+                    layer.msg("未选中数据", {
+                        icon: 3,
+                        time: 1000
+                    });
+                    return false;
+                }
+                let ids = "";
+                for (let i = 0; i < data.length; i++) {
+                    ids += data[i].userId + ",";
+                }
+                ids = ids.substr(0, ids.length - 1);
+                layer.confirm('确定要删除这些用户', {
+                    icon: 3,
+                    title: '提示'
+                }, function (index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url: MODULE_PATH + "batchRemove/" + ids,
+                        dataType: 'json',
+                        type: 'delete',
+                        success: function (result) {
+                            layer.close(loading);
+                            if (result.success) {
+                                layer.msg(result.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    table.reload('stu-table');
+                                });
+                            } else {
+                                layer.msg(result.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            window.remove = function (obj) {
+                layer.confirm('确定要移除该学生', {
+                    icon: 3,
+                    title: '提示'
+                }, function (index) {
+                    layer.close(index);
+                    let loading = layer.load();
+                    $.ajax({
+                        url: MODULE_PATH + "remove/" + obj.data['userId'],
+                        dataType: 'json',
+                        type: 'delete',
+                        success: function (result) {
+                            layer.close(loading);
+                            if (result.success) {
+                                layer.msg(result.msg, {
+                                    icon: 1,
+                                    time: 1000
+                                }, function () {
+                                    obj.del();
+                                });
+                            } else {
+                                layer.msg(result.msg, {
+                                    icon: 2,
+                                    time: 1000
+                                });
+                            }
+                        }
+                    })
+                });
+            }
+
+            form.on('radio(radiobox)', function (data) {
+
+                if (data.value == '学生信息') {
+                    $('.class-form').hide();
+                    $('.stu-form').show();
+                }
+                else {
+                    $('.class-form').show();
+                    $('.stu-form').hide();
+                }
+            });
+
+        });
+    </script>
+
+
+
+    <script>
+        // 时间选择
+        layui.use(function () {
+            var laydate = layui.laydate;
+            // 自定义格式
+            laydate.render({
+                elem: '#ID-laydate-format-1',
+                format: 'yyyy年MM月dd日'
+            });
+        })
+    </script>
+
+    <script>
+        // 图片上传
+        layui.use(function () {
+            var upload = layui.upload;
+            var layer = layui.layer;
+            var element = layui.element;
+            var $ = layui.$;
+            // 多图片上传
+            upload.render({
+                elem: '#ID-upload-demo-btn-2',
+                url: 'https://httpbin.org/post', // 此处用的是第三方的 http 请求演示，实际使用时改成您自己的上传接口即可。
+                multiple: true,
+                before: function (obj) {
+                    // 预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $('#upload-demo-preview').append('<img src="' + result + '" alt="' + file.name + '" style="width: 90px; height: 90px;">')
+                    });
+                },
+                done: function (res) {
+                    // 上传完毕
+                    // …
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // 页面跳转
+        layui.use(['layer', 'element', 'jquery', 'loading'
+        ], function () {
+            var layer = layui.layer,
+                $ = layui.jquery,
+                loading = layui.loading;
+
+            $(".skip").click(function () {
+                console.log("jump");
+                // $(".loading-1").click(function () {
+                //     loading.Load(1, "");
+                //     loading.loadRemove(3000);
+                // })
+                // parent.layui.tab.addTabOnlyByElem('content', { id: 'tch_myCourse', title: '我的课程', url: 'view/teacher/myCourse.html', close: true })
+            })
+
+        });
+    </script>
+</body>
+
+</html>

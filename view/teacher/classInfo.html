@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>班级信息</title>
+    <link rel="stylesheet" href="../../component/pear/css/pear.css" />
+</head>
+<style>
+    .layui-card-body .layui-table-tool {
+        padding: 0 !important;
+        min-height: 0;
+    }
+</style>
+
+<body class="pear-container">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <form class="layui-form" action="javascript:;">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">关键字</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="keyword" placeholder="" class="layui-input">
+                    </div>
+                    <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="stu-query">
+                        <i class="layui-icon layui-icon-search"></i>
+                        查询
+                    </button>
+                    <button type="reset" class="pear-btn pear-btn-md">
+                        <i class="layui-icon layui-icon-refresh"></i>
+                        重置
+                    </button>
+                    <button class="pear-btn pear-btn-primary pear-btn-md addBtn" lay-filter="stu-add">
+                        <i class="layui-icon layui-icon-add-1"></i>
+                        新增
+                    </button>
+                </div>
+            </form>
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <table id="class-table-all" lay-filter="class-table-all"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </script>
+
+
+    <script src="../../component/layui/layui.js"></script>
+    <script src="../../component/pear/pear.js"></script>
+    <script>
+
+        function formatDate(dateString) {
+            const date = new Date(dateString.replace(/年|月/g, '-').replace(/日/, ''));
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        layui.use(['table', 'form', 'jquery'], function () {
+            let table = layui.table;
+            let form = layui.form;
+            let $ = layui.jquery;
+
+            // 获取全部班级信息
+            $.get('http://localhost:8081/all-class', function (res) {
+                table.render({
+                    elem: '#class-table-all',
+                    toolbar: '#class-toolbar',
+                    defaultToolbar: [],
+                    skin: 'line',
+                    page: true,
+                    cols: [[
+                        { type: 'checkbox' },
+                        { field: 'classNumber', title: '班级号', width: '35%', align: 'center' },
+                        { field: 'className', title: '班级名称', width: '25%', align: 'center' },
+                        { field: 'totalStudentNumber', title: '人数', width: '25%', align: 'center' }
+                    ]],
+                    data: res.data
+                });
+            });
+
+
+            $(".addBtn").on("click", function () {
+                var oldData = parent.layui.table.cache["class-table-choose"];
+                var checkStatus = table.checkStatus('class-table-all');
+                var newData = checkStatus.data;
+                for (let i = 0; i < newData.length; i++) {
+                    console.log(newData[i]);
+                    oldData.push(newData[i]);
+                    let classNumber = newData[i].classNumber;
+
+                    let tno = sessionStorage.getItem('tno');
+                    let courseId = sessionStorage.getItem('courseId');
+                    let startTime = sessionStorage.getItem('startTime');
+                    let endTime = sessionStorage.getItem('endTime');
+                    startTime = formatDate(startTime);
+                    endTime = formatDate(endTime);
+
+                    $.get('http://localhost:8081/all-student/' + classNumber, function (res) {
+                        let students = res.data;
+                        let promises = [];
+                        for (let i = 0; i < students.length; i++) {
+                            let dataPost = {
+                                tno,
+                                courseId,
+                                classNumber,
+                                sno:students[i],
+                                startTime,
+                                endTime
+                            }
+                            console.log(dataPost);
+                            let promise = new Promise((resolve, reject) => {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'http://localhost:8081/teacher-course-student',
+                                    data: JSON.stringify(dataPost),
+                                    async: false,    // 同步请求  
+                                    contentType: 'application/json',
+                                    success: function (res) {
+                                        console.log(res);
+                                        resolve(res);  // 当请求成功时，解决 promise  
+                                    },
+                                    error: function (error) {
+                                        reject(error);  // 当请求失败时，拒绝 promise  
+                                    }
+                                });
+                            });
+                            promises.push(promise);  // 将每个 promise 添加到数组中  
+                        }
+                        Promise.all(promises).then(() => {
+                            // 所有 AJAX 请求都已完成，在这里执行你的代码  
+                            console.log("All AJAX requests are done.");
+                        }).catch((error) => {
+                            // 如果有任何 AJAX 请求失败，在这里处理错误  
+                            console.log("An error occurred:", error);
+                        });
+                    });
+                }
+
+                //打印重组的table信息
+                parent.layui.table.reload('class-table-choose',
+                    {
+                        data: oldData
+                    })
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>

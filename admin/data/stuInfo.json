@@ -1,0 +1,25 @@
+{
+	"code": 0,
+	"msg": "...",
+	"count": 3,
+	"data": [
+		{
+			"id": "111",
+			"stuName": "甄嬛",
+			"college": "计算机学院",
+			"class": "三年级"
+		},
+		{
+			"id": "222",
+			"stuName": "哇哈哈",
+			"college": "计算机学院",
+			"class": "三年级"
+		},
+		{
+			"id": "333",
+			"stuName": "阿童木",
+			"college": "计算机学院",
+			"class": "三年级"
+		}
+	]
+}

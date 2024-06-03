@@ -1,0 +1,46 @@
+{
+	"status": {
+		"code": 200,
+		"message": "操作成功"
+	},
+	"data": [
+		{
+			"id": "001",
+			"title": "数据库安全",
+			"parentId": "0",
+			"children": [
+				{
+					"id": "001001",
+					"title": "MySQL数据库管理",
+					"last": true,
+					"parentId": "001"
+				},
+				{
+					"id": "001002",
+					"title": "MySQL进阶",
+					"last": true,
+					"parentId": "001"
+				}
+			]
+		},
+		{
+			"id": "002",
+			"title": "系统安全",
+			"parentId": "0",
+			"children": [
+				{
+					"id": "002001",
+					"title": "Linux系统文件管理",
+					"last": true,
+					"parentId": "002"
+				},
+				{
+					"id": "002002",
+					"title": "Linux系统磁盘管理",
+					"last": true,
+					"parentId": "002"
+				}
+			]
+		}
+	]
+}

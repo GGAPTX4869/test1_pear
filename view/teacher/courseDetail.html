@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>成功</title>
+	<link rel="stylesheet" href="../../component/pear/css/pear.css" />
+	<style>
+		.course-info {
+			display: flex;
+			align-items: center;
+			height: 166px;
+		}
+
+		.course-info .card-pic {
+			position: relative;
+			vertical-align: top;
+			border-radius: 10px;
+			height: 166px;
+			width: 312px;
+			overflow: hidden;
+		}
+
+		.course-info .card-pic img {
+			width: 100%;
+			height: 100%;
+		}
+
+		.card-info {
+			margin-left: 30px;
+			height: 100%;
+			flex: 1;
+		}
+
+		.card-info .title h3 {
+			font-weight: normal;
+			font-size: 18px;
+			color: #333;
+		}
+
+
+		.card-info .course-detail {
+			font-size: 14px;
+			color: gray;
+			margin-left: 20px;
+		}
+
+		.card-related {
+			margin-left: 30px;
+			flex: 1;
+		}
+
+		/* 课程相关 */
+		.info-box {
+			padding: 15px 0;
+			font-size: 16px;
+		}
+
+		.info-box>.layui-tab-title .layui-this {
+			background-color: #1e9fff;
+			color: #fff;
+		}
+
+		.course-content {
+			display: flex;
+			margin-top: 20px;
+			width: 100%;
+			height: calc(100% - 186px);
+			min-height: 527px;
+		}
+
+		/* 左侧选项盒 */
+		.left-list {
+			border: 1px solid rgba(231, 231, 231, 1);
+			box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.1);
+			overflow: hidden;
+			outline: none;
+		}
+
+		.left-list .layui-nav {
+			width: 100%;
+			height: 100%;
+			overflow: auto;
+		}
+
+		.layui-nav-tree .layui-nav-child dd.layui-this,
+		.layui-nav-tree .layui-nav-child dd.layui-this a,
+		.layui-nav-tree .layui-this,
+		.layui-nav-tree .layui-this>a,
+		.layui-nav-tree .layui-this>a:hover {
+			background-color: #1e9fff;
+			color: #fff;
+		}
+
+
+		/* 右侧盒子--关于每条课程信息的内容 */
+		.right-content {
+			flex: 1;
+			margin-left: 20px;
+			min-height: 500px;
+			background-color: #fff;
+			overflow: auto;
+			box-shadow: 0px 0px 7px 0px rgba(0, 0, 0, 0.1);
+		}
+
+		.right-content .layui-tab-card {
+			height: 100%;
+		}
+
+		.layui-tab-card>.layui-tab-title .layui-this {
+			background-color: #1e9fff;
+			color: #fff;
+		}
+
+		.right-content .tab-content {
+			overflow: auto;
+			/* padding: 10px 20px; */
+		}
+		.layui-tab-content>.layui-tab-item:nth-child(3) {
+			padding: 15px;
+		}
+
+		.base-cont .row {
+			line-height: 36px;
+			margin: 5px 0 0;
+		}
+
+		.base-cont .row label {
+			width: 108px;
+		}
+
+		.layui-card-body {
+			padding-top: 0px;
+		}
+
+		.layui-card-body .layui-form {
+			margin-top: 0;
+		}
+
+		.table-form .tableType {
+			float: right;
+			margin-bottom: 0;
+		}
+	</style>
+</head>
+
+<body class="pear-container">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<div class="course-info">
+				<div class="card-pic">
+					<img src="../../admin/images/course1.png" alt="" />
+					<span></span>
+				</div>
+				<div class="card-info">
+					<div class="title">
+						<h3>渗透扫描与测试</h3>
+					</div>
+					<div class="course-detail">
+						<ul>
+							<li>技术方向--<span>测试渗透</span></li>
+
+							<li>章节--<span>4</span></li>
+
+							<li>实验--<span>7</span></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-related">
+					<div><span>课程时间：</span><span> 2023-05-15 - 2023-05-17</span></div>
+					<div><span>上课人数</span><span>35</span></div>
+				</div>
+			</div>
+			<div class="layui-tab info-box">
+				<ul class="layui-tab-title">
+					<li class="layui-this">课程内容</li>
+					<li>排课信息</li>
+					<li>课程资源</li>
+				</ul>
+				<div class="layui-tab-content">
+					<div class="layui-tab-item layui-show">
+						<div class="course-content layui-row">
+							<div class="left-list layui-col-md3">
+								<ul class="layui-nav layui-nav-tree">
+								</ul>
+							</div>
+							<div class="right-content layui-col-md9">
+								<div class="layui-tab layui-tab-card">
+									<ul class="layui-tab-title">
+										<li class="layui-this">基础信息</li>
+										<li>实验指导</li>
+										<li>实验报告</li>
+									</ul>
+									<div class="layui-tab-content tab-content">
+										<div class="layui-tab-item layui-show">
+											<div class="base-cont">
+												基础信息
+											</div>
+										</div>
+										<div class="layui-tab-item">实验指导</div>
+										<div class="layui-tab-item">实验环境</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-tab-item">
+						<div class="layui-card">
+							<div class="layui-card-body">
+								<form class="layui-form table-form">
+									<div class="layui-form-item tableType">
+										<div class="layui-input-block">
+											<input type="radio" name="sex" value="学生信息" title="学生信息"
+												lay-filter="radiobox" checked>
+											<input type="radio" name="sex" value="班级信息" title="班级信息"
+												lay-filter="radiobox">
+										</div>
+									</div>
+								</form>
+								<div class="layui-form-item stu-form">
+									<table lay-filter="stu-table" id="stu-table-choose"></table>
+								</div>
+								<div class="layui-form-item class-form" style="display: none">
+									<table lay-filter="class-table" id="class-table-choose"></table>
+								</div>
+
+							</div>
+						</div>
+
+						<script type="text/html" id="user-toolbar">
+							<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="choose">
+								<i class="layui-icon layui-icon-add-1"></i>
+								选择
+							</button>
+							<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+								<i class="layui-icon layui-icon-delete"></i>
+								删除
+							</button>
+						</script>
+
+						<script type="text/html" id="stu-bar">
+							<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="remove">移除</button>
+						</script>
+
+						<script type="text/html" id="class-bar">
+							<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove">移除</button>
+						</script>
+
+
+					</div>
+					<div class="layui-tab-item">课程资源</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../component/layui/layui.js"></script>
+	<scrip src="../../component/pear/pear.js">
+		</script>
+		<script>
+			function formatDate(dateStr)  {
+				const date = new Date(dateStr);
+				const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+				return formattedDate;
+			}
+			layui.use(['jquery', 'form', 'table'], function () {
+				var $ = layui.jquery;
+				var form = layui.form;
+				var table = layui.table;
+				form.on('radio(radiobox)', function (data) {
+					if (data.value == '学生信息') {
+						$('.class-form').hide();
+						$('.stu-form').show();
+					}
+					else {
+						$('.class-form').show();
+						$('.stu-form').hide();
+					}
+				});
+
+				$('.layui-nav-tree').on('click', '.layui-nav-item', function () {
+					this.classList.add("layui-this");
+				});
+				$('.layui-nav-tree').on('blur', '.layui-nav-item', function () {
+					this.classList.remove("layui-this");
+				});
+
+				window.onload = () => {
+					let tno = '123';
+					let courseId = sessionStorage.getItem('curCourseId');
+					console.log("courseId:" + courseId);
+					$.get('http://localhost:8081/t-course-detail/' + tno + '/' + courseId, function (res) {
+						console.log(res.data);
+						let det = res.data[0];
+						let cardInfo = `<div class="title">
+							<h3>${det.courseName}</h3>
+						</div>
+						<div class="course-detail">
+							<ul>
+								<li>技术方向--<span>${det.direction}</span></li>
+								<li>章节--<span>4</span></li>
+								<li>实验--<span>7</span></li>
+							</ul>
+						</div>`;
+						let related = `<div><span>课程时间：</span><span> ${formatDate(det.startTime)} - ${formatDate(det.endTime)}</span></div>`
+						$('.card-info').html(cardInfo);
+						$('.card-related').html(related);
+					})
+
+					// 获取课程对应的实验
+					$.get('http://localhost:8081/course-exp/' + courseId, function (res) {
+						let expList = res.data;
+						var str = ``;
+						for (var i = 0; i < expList.length; i++) {
+							str += `<li class="layui-nav-item">
+								<a href="javascript:;">${expList[i].expName}</a>
+							</li>`
+						}
+						$('.layui-nav-tree').html(str);
+					})
+
+
+
+					// 渲染该课程的选课学生
+					$.get('http://localhost:8081/student-list?courseId=' + courseId + '&tno=' + tno, function (res) {
+						let data = [];
+						if (res.data != null) data = res.data;
+						table.render({
+							elem: '#stu-table-choose',
+							toolbar: '#user-toolbar',
+							page: true,
+							cols: [[ //标题栏
+								{ type: 'checkbox' },
+								{ field: 'sno', title: '学号', width: '20%', align: 'center' },
+								{ field: 'name', title: '学生姓名', width: '20%', align: 'center' },
+								{ field: 'collegeName', title: '所属院系', width: '20%', align: 'center' },
+								{ field: 'classNumber', title: '所属班级', width: '20%', align: 'center' },
+								, { field: 'operate', title: '操作', width: '10%', align: 'center', toolbar: "#stu-bar" }
+							]],
+							data: data
+						});
+					})
+
+					// 渲染该课程的选课班级
+					$.get('http://localhost:8081/class-list?courseId=' + courseId + '&tno=' + tno, function (res) {
+						let data = [];
+						if (res.data != null) data = res.data;
+						table.render({
+							elem: '#class-table-choose',
+							toolbar: '#user-toolbar',
+							cols: [[
+								{ type: 'checkbox' },
+								{ field: 'classNumber', title: '班级号', width: '20%', align: 'center' },
+								{ field: 'className', title: '班级名称', width: '20%', align: 'center' },
+								{ field: 'collegeName', title: '学院', width: '20%', align: 'center' },
+								{ field: 'totalStudentNumber', title: '选课人数', width: '20%', align: 'center' },
+							]],
+							data: data
+						});
+					})
+				}
+			})
+
+		</script>
+
+</body>
+
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>排课设置</title>
+    <link rel="stylesheet" href="../../component/pear/css/pear.css" />
+    <style>
+        .layui-container {
+            margin: 0;
+            padding-top: 20px;
+        }
+
+        .layui-form .layui-form-item {
+            margin-bottom: 25px;
+        }
+
+        .layui-form .layui-form-item .layui-input-inline {
+            width: 270px;
+        }
+    </style>
+</head>
+
+<body class="pear-container">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <div class="layui-container">
+                <blockquote class="layui-elem-quote" style="margin-bottom: 60px">
+                    排课设置
+                </blockquote>
+                <div class="layui-row">
+                    <div class="layui-col-lg8">
+                        <form class="layui-form" action="">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">选择课程</label>
+                                    <div class="layui-input-inline">
+                                        <select name="course" id="courses" lay-filter="course" lay-verify="required"
+                                            lay-search>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">预约实验</label>
+                                    <div class="layui-input-inline">
+                                        <select name="exp" id="exps" lay-filter="exp" lay-verify="required" lay-search>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">实验班级</label>
+                                    <div class="layui-input-inline">
+                                        <select name="class" id="classList" lay-filter="class" lay-verify="required"
+                                            lay-search>
+
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">日期范围</label>
+                                    <div class="layui-inline" id="ID-laydate-range">
+                                        <div class="layui-input-inline">
+                                            <input type="text" autocomplete="off" id="ID-laydate-start-date"
+                                                class="layui-input" name="startTime" placeholder="开始日期">
+                                        </div>
+                                        <div class="layui-form-mid">-</div>
+                                        <div class="layui-input-inline">
+                                            <input type="text" autocomplete="off" id="ID-laydate-end-date"
+                                                class="layui-input" name="endTime" placeholder="结束日期">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script src="../../component/layui/layui.js"></script>
+    <scrip src="../../cliveomponent/pear/pear.js">
+        </script>
+        <script>
+            layui.use(function () {
+                var laydate = layui.laydate;
+                // 日期范围 - 左右面板独立选择模式
+                laydate.render({
+                    elem: '#ID-laydate-range',
+                    range: ['#ID-laydate-start-date', '#ID-laydate-end-date']
+                });
+
+            });
+        </script>
+        <script>
+            layui.use(['form', 'jquery'], function () {
+                let form = layui.form;
+                let $ = layui.jquery;
+
+                window.onload = () => {
+                    let selectCourseId;
+                    let tno = '123';
+                    let selectClass;
+                    let students = [];
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://localhost:8081/t-course/' + tno,
+                        dataType: 'JSON',
+                        success: function (res) {
+                            var courses = res.data;
+                            var str = `<option value="">请选择</option>`;
+                            for (let i = 0; i < courses.length; i++) {
+                                str += `<option value='${courses[i].courseId}'>${courses[i].courseName}</option>`;
+                            }
+                            $('#courses').html(str);
+                            form.render('select');
+                            form.on('select(course)', function (data) {
+                                selectCourseId = data.value;
+                                // 获取课程对应的实验
+                                $.ajax({
+                                    type: 'GET',
+                                    url: 'http://localhost:8081/course-exp/' + selectCourseId,
+                                    dataType: 'JSON',
+                                    success: function (res) {
+                                        var exps = res.data;
+                                        var str = `<option value="">请选择</option>`;
+                                        for (let i = 0; i < exps.length; i++) {
+                                            str += `<option value='${exps[i].expId}'>${exps[i].expName}</option>`;
+                                        }
+                                        $('#exps').html(str);
+                                        form.render('select');
+                                    }
+                                });
+
+                                // 获取课程对应的实验班级选项
+                                $.ajax({
+                                    type: 'GET',
+                                    url: 'http://localhost:8081/class-list?courseId=' + selectCourseId + '&tno=' + tno,
+                                    dataType: 'JSON',
+                                    success: function (res) {
+                                        var classList = res.data;
+                                        var str = `<option value="">请选择</option>`;
+                                        for (let i = 0; i < classList.length; i++) {
+                                            str += `<option value='${classList[i].classNumber}'>${classList[i].classNumber} &nbsp;&nbsp;&nbsp;&nbsp;<span>${classList[i].totalStudentNumber}人</span></option>`;
+                                        }
+                                        $('#classList').html(str);
+                                        form.render('select');
+                                    }
+                                });
+                            });
+
+                            form.on('select(class)', function (data) {
+                                selectClass = data.value;
+                                $.get('http://localhost:8081/student-course-list?courseId=' + selectCourseId + '&tno=' + tno + "&classNumber=" + selectClass, function (res) {
+                                    students = res.data;
+                                    console.log(students);
+                                })
+                            })
+                        }
+                    });
+                    form.on('submit(formDemo)', function (data) {
+                        let courseId = data.field.course;
+                        let expId = data.field.exp;
+                        let classNumber = data.field.class;
+                        let startTime = data.field.startTime;
+                        let endTime = data.field.endTime;
+                        let tno = "123";
+                        for (let i = 0; i < students.length; i++) {
+                            let dataPost = {
+                                tno,
+                                courseId,
+                                expId,
+                                classNumber,
+                                startTime,
+                                endTime,
+                                sno: students[i]
+                            };
+                            $.ajax({
+                                type: 'POST',
+                                url: 'http://localhost:8081/exp-arrange',
+                                data: JSON.stringify(dataPost),
+                                contentType: 'application/json',
+                                success: function (res) {
+                                    console.log(res);
+                                }
+                            });
+                        }
+                        return false;
+                    });
+                }
+
+            });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,94 @@
+[
+	{
+		"id": "stu_myCourse",
+		"title": "我的课程",
+		"icon": "layui-icon layui-icon-component",
+		"type": 1,
+		"href": "view/student/myCourse.html",
+		"openType": "_iframe"
+	},
+	{
+		"id": "stu_Assignments",
+		"title": "实验任务",
+		"icon": "layui-icon layui-icon-component",
+		"type": 1,
+		"href": "view/student/Assignments.html",
+		"openType": "_iframe"
+	},
+	{
+		"id": "myCredit",
+		"title": "我的成绩",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 1,
+		"href": "view/student/creditNav.html",
+		"openType": "_iframe"
+	},
+	{
+		"id": "courseInfo",
+		"title": "课程详情",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"openType": "_iframe",
+		"children": [
+			{
+				"id": "t_courseInitial",
+				"title": "初始课程",
+				"icon": "layui-icon layui-icon-auz",
+				"type": 1,
+				"href": "view/teacher/courseOptions.html",
+				"openType": "_iframe"
+			},
+			{
+				"id": "courseCreate",
+				"title": "课程创建",
+				"icon": "layui-icon layui-icon-auz",
+				"type": 1,
+				"href": "view/teacher/courseCreate.html",
+				"openType": "_iframe"
+			},
+			{
+				"id": "tch_myCourse",
+				"title": "我的课程",
+				"icon": "layui-icon layui-icon-auz",
+				"type": 1,
+				"href": "view/teacher/myCourse.html",
+				"openType": "_iframe"
+			}
+		]
+	},
+	{
+		"id": "courseManage",
+		"title": "排课管理",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"openType": "_iframe",
+		"children": [
+			{
+				"id": "courseArrange",
+				"title": "排课设置",
+				"icon": "layui-icon layui-icon-auz",
+				"type": 1,
+				"href": "view/teacher/courseArrange.html",
+				"openType": "_iframe"
+			},
+			{
+				"id": "ArrangeInfo",
+				"title": "排课信息",
+				"icon": "layui-icon layui-icon-auz",
+				"type": 1,
+				"href": "view/teacher/ArrangeInfo.html",
+				"openType": "_iframe"
+			}
+		]
+	},
+	{
+		"id": "adminIndex",
+		"title": "管理员界面",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 1,
+		"href": "view/admin/adminIndex.html",
+		"openType": "_iframe"
+	}
+]

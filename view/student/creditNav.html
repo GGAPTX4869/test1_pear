@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>成功</title>
+	<link rel="stylesheet" href="../../component/pear/css/pear.css" />
+	<style>
+		.options {
+			padding: 10px 4px;
+			font-size: 16px;
+			vertical-align: middle;
+		}
+
+		.options:nth-child(1) {
+			border-bottom: 1px solid rgb(202, 214, 234);
+		}
+
+		.options .mini-title {
+			font-weight: bold;
+		}
+
+		.mini-title,
+		.mini-label {
+			display: inline-block;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
+			padding: 4px 18px;
+			max-width: 150px;
+			cursor: pointer;
+			margin: 0px 4px;
+			vertical-align: middle;
+		}
+
+		.mini-label:hover {
+			color: rgb(28, 125, 231);
+		}
+		.search-box {
+			margin-top: 30px;
+			margin-left: 20px;
+			width: 50%;
+		}
+
+		.button-list-right {
+
+			display: flex;
+		}
+
+		.button-list {
+			flex: 1;
+			margin-right: -15px;
+		}
+
+		.course-list {
+			display: flex;
+			flex-wrap: wrap;
+			margin-top: 30px;
+		}
+
+		.cardbox {
+			position: relative;
+			float: left;
+			width: 18%;
+			min-width: 250px;
+			max-width: 324px;
+			margin-right: 0.75%;
+			margin-left: 0.75%;
+			margin-bottom: 20px;
+			border-radius: 10px;
+			box-shadow: 0px 12px 36px 0px #d3d7dd;
+			height: 275px;
+			overflow: hidden;
+		}
+
+		.cardpicwrap {
+			position: relative;
+			min-width: 250px;
+			max-width: 324px;
+			width: 100%;
+			height: 125px;
+			overflow: hidden;
+			cursor: pointer;
+		}
+
+		.cardpicwrap a {
+			width: 100%;
+			height: 100%;
+		}
+
+		.cardpicwrap img {
+			width: 100%;
+			height: 100%;
+			transition: all 0.5s;
+		}
+
+		.cardpicwrap img:hover {
+			transform: scale(1.3);
+		}
+
+		.cardpicwrap span {
+			display: inline-block;
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 57px;
+			height: 57px;
+			background-image: url("../../admin/images/course-finish.png");
+		}
+
+		.cardinfo {
+			box-sizing: border-box;
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+		}
+
+		.cardinfo ul {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+		}
+
+		.cardinfo ul li {
+			line-height: 28px;
+			color: #666;
+			font-size: 14px;
+		}
+
+		.cardinfo ul li:nth-of-type(1) {
+			font-size: 17px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			color: #111;
+			overflow: hidden;
+		}
+
+		.cardinfo ul li img {
+			width: 30px;
+			border-radius: 50%;
+			vertical-align: middle;
+		}
+		.cardinfo ul li .pull-right {
+			float: right;
+			margin-right: 5px;
+		}
+		.cardinfo ul li:last-child {
+			width: 100%;
+			height: 8px;
+			background-color: #ffc200;
+		}
+	</style>
+</head>
+
+<body class="pear-container">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<div class="options">
+				<div class="mini-title">技术方向</div>
+				<div class="mini-label">网络安全</div>
+				<div class="mini-label">网络安全</div>
+				<div class="mini-label">网络安全</div>
+				<div class="mini-label">网络安全</div>
+				<div class="mini-label">网络安全</div>
+				<div class="mini-label">网络安全</div>
+			</div>
+			<!-- <div class="options">
+				<div class="mini-title">课程难度</div>
+				<div class="mini-label">全部</div>
+				<div class="mini-label">初级</div>
+				<div class="mini-label">中级</div>
+				<div class="mini-label">高级</div>
+			</div> -->
+
+			<div class="layui-input-group search-box">
+				<input type="text" placeholder="带任意后置内容" class="layui-input">
+				<div class="layui-input-split layui-input-suffix" style="cursor: pointer;">
+					<i class="layui-icon layui-icon-search"></i>
+				</div>
+
+			</div>
+			<div class="course-list">
+				<div class="cardbox">
+					<div class="cardpicwrap">
+						<a href="./creditDetail.html">
+							<img src="../../admin/images/course1.png" alt="" />
+							<span></span>
+						</a>
+					</div>
+					<div class="cardinfo">
+						<ul>
+							<li>渗透扫描与测试</li>
+							<li>
+								<img src="../../admin/images/teacher.png" alt="" />周扬
+							</li>
+							<li>2023-05-15--2023-05-17</li>
+							<li>
+								<span>100%</span>
+								<span class="pull-right">用时2小时36分47秒</span>
+							</li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+				<div class="cardbox">
+					<div class="cardpicwrap">
+						<a to="/stu_course/course1" @click="hello">
+							<img src="../../admin/images/course1.png" alt="" />
+							<span></span>
+						</a>
+					</div>
+					<div class="cardinfo">
+						<ul>
+							<li>渗透扫描与测试</li>
+							<li>
+								<img src="../../admin/images/teacher.png" alt="" />周扬
+							</li>
+							<li>2023-05-15--2023-05-17</li>
+							<li>
+								<span>100%</span>
+								<span class="pull-right">用时2小时36分47秒</span>
+							</li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+				<div class="cardbox">
+					<div class="cardpicwrap">
+						<a to="/stu_course/course1" @click="hello">
+							<img src="../../admin/images/course1.png" alt="" />
+							<span></span>
+						</a>
+					</div>
+					<div class="cardinfo">
+						<ul>
+							<li>渗透扫描与测试</li>
+							<li>
+								<img src="../../admin/images/teacher.png" alt="" />周扬
+							</li>
+							<li>2023-05-15--2023-05-17</li>
+							<li>
+								<span>100%</span>
+								<span class="pull-right">用时2小时36分47秒</span>
+							</li>
+							<li></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<script src="../../component/layui/layui.js"></script>
+	<script src="../../component/pear/pear.js"></script>
+</body>
+
+</html>

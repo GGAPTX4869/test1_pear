@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>排课信息</title>
+  <link rel="stylesheet" href="../../component/pear/css/pear.css" />
+</head>
+<style>
+  .status-list {
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .status-list button {
+    /* float: right; */
+    margin-right: 10px;
+    opacity: 0.4;
+    cursor: pointer;
+  }
+
+  .current {
+    opacity: 1 !important;
+  }
+
+  blockquote {
+    cursor: pointer;
+  }
+</style>
+
+<body class="pear-container">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div class="status-list">
+        <button class="pear-btn pear-btn-primary current">未开始</button>
+        <button class="pear-btn pear-btn-primary">正在进行</button>
+        <button class="pear-btn pear-btn-primary">已结束</button>
+      </div>
+      <div class="schedule-exps layui-clear">
+        <blockquote class="layui-elem-quote">
+          <h2>课程: <span>test</span></h2>
+          <h3>实验: <span>mini-test</span></h3>
+          <p> &emsp; &emsp; &emsp;实验时间：<span>2023-9-9</span>至<span>2023-9-10</span> 实验班级：<span>计嵌二班</span></p>
+        </blockquote>
+
+      </div>
+    </div>
+  </div>
+  <script src="../../component/layui/layui.js"></script>
+  <script src="../../component/pear/pear.js"></script>
+  <script>
+    layui.use('jquery', function () {
+      var $ = layui.$;
+      $(".status-list button").click(function () {
+        $(this).addClass("current").siblings().removeClass("current");
+      })
+
+      window.onload = () => {
+        let tno = "123";
+        let str = ``;
+        $.get(`http://localhost:8081/t-exp-arrange/${tno}`, function (res) {
+          let exps = res.data;
+          for (let i = 0; i < exps.length; i++) {
+            str += ` <blockquote class="layui-elem-quote skip">
+                       <h2>课程: <span>${exps[i].courseName}</span></h2>
+                       <h3>实验: <span>${exps[i].expName}</span></h3>
+                      <p> &emsp; &emsp; &emsp;实验时间：<span>${formatDate(exps[i].startTime)}</span>至<span>${formatDate(exps[i].endTime)}</span> 实验班级：<span>${exps[i].classNumber}</span></p>
+                      </blockquote>`;
+          }
+          $(".schedule-exps").html(str);
+        });
+      }
+      // 事件委派
+      $(".schedule-exps").on('click', '.skip', function () {
+        parent.layui.admin.jump("courseDetail", "课程详情", "view/teacher/courseDetail.html")
+      })
+    })
+
+  </script>
+</body>
+
+</html>

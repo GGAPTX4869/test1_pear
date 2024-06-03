@@ -1,0 +1,19 @@
+{
+	"code": 0,
+	"msg": "...",
+	"count": 3,
+	"data": [
+		{
+			"className": "19信安",
+			"total": 36
+		},
+		{
+			"className": "20信安",
+			"total": 36
+		},
+		{
+			"className": "21信安",
+			"total": 36
+		}
+	]
+}
